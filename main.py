@@ -17,12 +17,9 @@ def main():
 def home():
     if 'userId' in session:
         userId = session['userId']
-        return render_template('home.html', logininfo = userId)
-        print('userId', userId)
     else:
         userId = None
-        return render_template('home.html', logininfo = userId)
-        print('userId', userId)
+    return render_template('home.html', logininfo = userId)
 
 
 @app.route('/login/login', methods=['GET', 'POST'])
@@ -64,7 +61,6 @@ def logout():
 def regist():
     if request.method == 'POST':
         userid = request.form['id']
-        usernickname = request.form['nickname']
         userpw = request.form['pw']
 
         conn = connectsql()
@@ -77,8 +73,8 @@ def regist():
             conn.rollback()
             return render_template('./regist/registError.html')
         else:
-            query = "INSERT INTO userlist (user_id, user_nickname, user_pw) values (%s, %s, %s)"
-            value = (userid, usernickname, userpw)
+            query = "INSERT INTO userlist (user_id, user_pw) values (%s, %s)"
+            value = (userid, userpw)
             cursor.execute(query, value)
             conn.commit()
             return render_template('./regist/registSuccess.html')
@@ -90,6 +86,13 @@ def regist():
         return render_template('./regist/regist.html')
 
 
+@app.route('/mypage')
+def mypage():
+    if 'userId' in session:
+        userId = session['userId']
+    else:
+        userId = None
+    return render_template('mypage_selling.html', loginfo= userId)
 
 
 if __name__ == '__main__':
