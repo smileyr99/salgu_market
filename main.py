@@ -90,9 +90,10 @@ def regist():
 def mypage():
     if 'userId' in session:
         userId = session['userId']
+        return render_template('mypage_selling.html', loginfo=userId)
     else:
         userId = None
-    return render_template('mypage_selling.html', loginfo= userId)
+        return render_template('mypageError.html', loginfo= userId)
 
 
 if __name__ == '__main__':
