@@ -15,6 +15,7 @@
           margin-left: 20%;
         }
 
+
     </style>
 </head>
 <body>
@@ -23,11 +24,15 @@
 <nav class="navbar navbar-light bg-light" aria-label="Fourth navbar example">
     <div class="container">
        <!-- -->
-        <a class="btn btn-outline-light text-success" href="./mypage_selling.html">
+        <a class="btn btn-outline-light text-success" href="/mypage">
             <img src="../static/image/person-circle.svg" alt="Logo" style="width:40px;" class="rounded-pill">
         </a>
-        <a class="navbar-brand display-5 fw-bolder" href="./home.html"><h2>Project</h2></a>
+        <a class="navbar-brand display-5 fw-bolder" href="/home"><h2>Project</h2></a>
+        {% if logininfo %}
+         <a class="btn btn-outline-light text-success" href="/logout">Logout</a>
+        {% else %}
         <a class="btn btn-outline-light text-success" href="/login/login">Login</a>
+        {% endif %}
     </div>
 </nav>
 
@@ -80,7 +85,8 @@
                         <h3 class="mb-3">포켓몬 빵 시즌2</h3>
                         <h5 class="text-muted mb-3">가격: 30000원</h5>
                         <div class="dropdown">
-                            <button type="button" class="btn btn-outline-success dropdown-toggle" data-bs-toggle="dropdown">
+                            <button type="button" class="btn btn-outline-success dropdown-toggle"
+                                    data-bs-toggle="dropdown">
                                 판매중
                             </button>
                             <ul class="dropdown-menu">
@@ -89,12 +95,13 @@
                             </ul>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="container col-md-11">
+                <hr class="my-4">
+                <p class="text-musted">상품상세설명</p>
             </div>
         </div>
-        <div class="container col-md-11">
-        <hr class="my-4">
-        <p class="text-musted">상품상세설명</p>
-    </div>
     </div>
 
 </section>
