@@ -72,8 +72,10 @@
     <div class="header">
         <h3></h3>
     </div>
+ <div class="w3-col s2 border">
+ </div>
     <section>
-        <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="/write">
+        <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="/edit/{{datalist[0]}}">
             <fieldset>
                 <div class="w3-row mt-5">
                     <h3 class="text mb-4"> 이미지 업로드 (필수입력 3개)</h3>
@@ -91,7 +93,6 @@
                     </div>
 
                     <script>
-
                     function getImageFiles(e) {
                       const uploadFiles = [];
                       const files = e.currentTarget.files;
@@ -149,39 +150,43 @@
                         <div class="form-group ">
                             <div class="col-md-12 mb-3 mt-4">
                                 <input id="txtTitle" name="title" type="text" placeholder="제목을 입력하세요."
-                                       class="form-control input-md"  autofocus required maxlength="100">
+                                       class="form-control input-md" value="{{datalist[2]}}" autofocus required maxlength="100">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-12 mb-3">
                                 <input id="keyword" name="keyword" type="text" placeholder="키워드를 입력하세요."
-                                       class="form-control input-md"  autofocus required maxlength="50">
+                                       class="form-control input-md" value="{{datalist[1]}}" autofocus required maxlength="50">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-12 mb-3">
                                 <input id="price" name="price" type="text" placeholder="가격을 입력하세요."
-                                       class="form-control input-md"  autofocus required maxlength="50">
+                                       class="form-control input-md" value="{{datalist[3]}}" autofocus required maxlength="50">
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-12 mb-3">
+                            <div class="col-md-12 mb-4">
                                 <input id="phoneNum" name="phoneNum" type="text" placeholder="연락처를 입력하세요."
-                                       class="form-control input-md"  autofocus required maxlength="50">
+                                       class="form-control input-md" value="{{datalist[5]}}" autofocus required maxlength="50">
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 mb-4">
+                                <input id="state" name="state" type="text" placeholder="판매상태를 입력하세요."
+                                       class="form-control input-md" value="{{datalist[4]}}" autofocus required maxlength="50">
                         </div>
                         <div class="form-group">
                             <div class="col-md-12">
                             <textarea class="form-control" id="txtPost" name="content" placeholder="상세 설명을 입력하세요."
-                                      style="height:260px;" required></textarea>
+                                      style="height:260px;" required>{{datalist[6]}}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 control-label" for="singlebutton"></label>
                             <div class="col-md-12 mb-5">
-                                <input id="singlebutton" name="singlebutton" class="btn btn-success" type="submit"
-                                       value="작성하기">
-                                <button class="btn btn-success" type="button" onclick="location.href='/mypage'">돌아가기
+                                <input id="singlebutton" name="singlebutton" class="btn btn-success" type="submit" value="수정하기">
+                                <button class="btn btn-success" type="button" onclick="location.href='/mydetail/{{datalist[0]}}'">돌아가기
                                 </button>
                             </div>
                         </div>
@@ -189,6 +194,7 @@
                 </div>
             </fieldset>
         </form>
+
     </section>
 </div>
 

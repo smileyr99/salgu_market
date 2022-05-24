@@ -23,15 +23,15 @@
 <!-- Navigation-->
 <nav class="navbar navbar-light bg-light" aria-label="Fourth navbar example">
     <div class="container">
-        <!-- -->
+       <!-- -->
         <a class="btn btn-outline-light text-success" href="/mypage">
             <img src="../static/image/person-circle.svg" alt="Logo" style="width:40px;" class="rounded-pill">
         </a>
         <a class="navbar-brand display-5 fw-bolder" href="/home"><h2>Project</h2></a>
         {% if logininfo %}
-        <a class="btn btn-outline-light text-success" href="/login/login">Login</a>
+         <a class="btn btn-outline-light text-success" href="/logout">Logout</a>
         {% else %}
-        <a class="btn btn-outline-light text-success" href="/logout">Logout</a>
+        <a class="btn btn-outline-light text-success" href="/login/login">Login</a>
         {% endif %}
     </div>
 </nav>
@@ -44,14 +44,14 @@
             <div class="position-sticky pt-3">
                 <ul class="nav nav-pills flex-column" role="tablist">
                     <li class="nav-item">
-                        {% if loginfo %}
-                        <a class="nav-link text-dark disabled fw-bolder" href="#">{{loginfo}}님 page</a>
+                        {% if logininfo %}
+                        <a class="nav-link text-dark disabled fw-bolder" href="#">{{logininfo}}님 page</a>
                         {% endif %}
                     <li class="nav-item">
                         <a class="nav-link active text-dark" href="/mypage">판매중인 상품</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="./mypage_following_list.html">Following</a>
+                       <a class="nav-link text-dark" href="./mypage_following_list">Following</a>
                     </li>
                 </ul>
             </div>
@@ -142,10 +142,10 @@
                             <div class="d-flex-column mx-4 align-self-center">
                                 <div class="mt-3">
                                     <strong class="d-inline-block mx-3 text-success">키워드> {{main[3]}}</strong>
-                                    <a class="nav-link" href="./Mydetail.html"><h3 class="text-dark mb-0">{{main[4]}}</h3>
+                                    <a class="nav-link" href="/mydetail/{{main[4]}}"><h3 class="text-dark mb-0">{{main[5]}}</h3>
                                     </a>
-                                    <p class="mb-2 mx-3  text-muted">{{main[5]}}</p>
-                                    <div class="mb-2 mx-3  text-muted">{{main[6]}}</div>
+                                    <p class="mb-2 mx-3  text-muted">{{main[6]}}</p>
+                                    <div class="mb-2 mx-3  text-muted">{{main[7]}}</div>
                                 </div>
                             </div>
                         </div>

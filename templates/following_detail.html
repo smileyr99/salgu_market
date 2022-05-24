@@ -89,25 +89,7 @@
                         <hr class="my-2">
                     </div>
                     <div class="fs-5 mb-2 mt-3">
-                         <h5 class="mb-3"> 판매자: {{datalist[7]}}
-                        {% if lg==1 %}
-                            {% if logininfo != posting_id %}
-                                {% if flag==0 %}
-                                    <a class="btn btn-outline-success flex-shrink-0 mx-3" type="button" href="/follow/{{datalist[9]}}">
-                                        follow
-                                    </a>
-                                {% else %}
-                                    <a class="btn btn-outline-success flex-shrink-0 mx-3" type="button" href="/unfollow/{{datalist[9]}}">
-                                        unfollow
-                                    </a>
-                                {% endif %}
-                            {% endif %}
-                        {% else %}
-                            <a class="btn btn-outline-success flex-shrink-0 mx-3" type="button" href="/follow/{{datalist[9]}}">
-                                follow
-                            </a>
-                        {% endif %}
-                         </h5>
+                         <h5 class="mb-3"> 판매자: {{datalist[7]}}</h5>
                     </div>
                 </div>
             </div>

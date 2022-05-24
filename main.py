@@ -30,7 +30,7 @@ def home_viewlist():
         # 대표이미지 title price
         conn = connectsql()
         cursor = conn.cursor()
-        query = "select image1, title, price, id from postdata WHERE keyword LIKE %s"
+        query = "select image1, title, price, id, user_id from postdata WHERE keyword LIKE %s"
 
         cursor.execute(query, search)
         raw = cursor.fetchall()
@@ -53,7 +53,7 @@ def home_viewlist():
 
         conn = connectsql()
         cursor = conn.cursor()
-        query = "select image1, title, price, id from postdata order by id DESC"
+        query = "select image1, title, price, id, user_id from postdata order by id DESC"
         cursor.execute(query)
         raw = cursor.fetchall()
 
@@ -64,41 +64,6 @@ def home_viewlist():
         conn.close()
 
         return render_template('home.html', logininfo=userId, datalist=data_list)
-
-@app.route('/detail/<id>', methods=['GET'])
-def detail(id):
-    conn = connectsql()
-    cursor = conn.cursor()
-    query = "select image1, image2, image3, keyword, title, price, state, user_id, content from postdata WHERE id = %s"
-    value = id
-    cursor.execute(query, value)
-    tmp = cursor.fetchall()
-    tmp1 = [list(row) for row in tmp]
-    data_list = tmp1[0]
-    print(data_list)
-
-    cursor.close()
-    conn.close()
-    return render_template('detail.html', datalist=data_list)
-
-
-@app.route('/mydetail', methods=['GET'])
-def mydetail():
-    if 'userId' in session:
-        userId = session['userId']
-        conn = connectsql()
-        cursor = conn.cursor()
-        query = "select image1, image2, image3, keyword, title, price, user_id, content from postdata"
-        cursor.execute(query)
-        data_list = cursor.fetchall()
-        print(data_list)
-
-        cursor.close()
-        conn.close()
-        return render_template('mypage_selling_sale.html', loginfo=userId, datalist=data_list)
-    else:
-        userId = None
-        return render_template('mypageError.html', loginfo=userId)
 
 
 @app.route('/login/login', methods=['GET', 'POST'])
@@ -166,23 +131,149 @@ def regist():
         return render_template('./regist/regist.html')
 
 
+@app.route('/detail/<idx>', methods=['GET'])
+def detail(idx):
+    if 'userId' in session:
+        userId = session['userId']
+    else:
+        userId = None
+    print(idx)
+
+    conn = connectsql()
+    cursor = conn.cursor()
+    query = "select image1, image2, image3, keyword, title, price, state, user_id,  content, id from postdata WHERE id = %s"
+    value = idx
+    cursor.execute(query, value)
+    tmp = cursor.fetchall()
+    tmp1 = [list(row) for row in tmp]
+    if len(tmp1) != 0:
+        data_list = tmp1[0]
+    else:
+        data_list = 0
+
+    post_user_id=data_list[7]
+
+    lg = 0  # logged in or not
+    flag = 0 #followed or not followed
+    if userId!=None:
+        lg = 1
+        query1 = "SELECT following_id FROM _following WHERE user_id = %s"
+        value1 = userId
+        cursor.execute(query1, value1)
+        tmp2 = cursor.fetchall()
+        followings = [list(row) for row in tmp2]
+        print(followings)
+        cursor.close()
+        conn.close()
+
+        flag = 0
+        cnt = 0
+        if len(followings) == 0:
+            return render_template('detail.html', logininfo=userId, datalist=data_list, posting_id=data_list[7], flag=flag, lg=lg)
+        else:
+            for row in followings:
+                if row[0] == post_user_id:
+                    flag = 1
+                    break
+                else:
+                    cnt = cnt + 1
+        if cnt == len(followings):
+            flag = 0
+
+    return render_template('detail.html', logininfo=userId, datalist=data_list, posting_id=data_list[7], flag=flag, lg=lg)
+
+
+@app.route('/following_detail/<idx>', methods=['GET'])
+def following_detail(idx):
+    if 'userId' in session:
+        userId = session['userId']
+    else:
+        userId = None
+    print(idx)
+
+    conn = connectsql()
+    cursor = conn.cursor()
+    query = "select image1, image2, image3, keyword, title, price, state, user_id, content from postdata WHERE id = %s"
+    value = idx
+    cursor.execute(query, value)
+    tmp = cursor.fetchall()
+    tmp1 = [list(row) for row in tmp]
+    if len(tmp1) != 0:
+        data_list = tmp1[0]
+    else:
+        data_list = 0
+
+    post_user_id=data_list[7]
+
+    lg = 0  # logged in or not
+    flag = 0 #followed or not followed
+    if userId!=None:
+        lg = 1
+        query1 = "SELECT following_id FROM _following WHERE user_id = %s"
+        value1 = userId
+        cursor.execute(query1, value1)
+        tmp2 = cursor.fetchall()
+        followings = [list(row) for row in tmp2]
+        print(followings)
+        cursor.close()
+        conn.close()
+
+        flag = 0
+        cnt = 0
+        if len(followings) == 0:
+            return render_template('following_detail.html', logininfo=userId, datalist=data_list, posting_id=data_list[7], flag=flag, lg=lg)
+        else:
+            for row in followings:
+                if row[0] == post_user_id:
+                    flag = 1
+                    break
+                else:
+                    cnt = cnt + 1
+        if cnt == len(followings):
+            flag = 0
+
+    return render_template('following_detail.html', logininfo=userId, datalist=data_list, posting_id=data_list[7], flag=flag, lg=lg)
+
+
+@app.route('/mydetail/<id>', methods=['GET'])
+def mydetail(id):
+    if 'userId' in session:
+        userId = session['userId']
+    else:
+        userId = None
+    conn = connectsql()
+    cursor = conn.cursor()
+    query = "select id, image1, image2, image3, keyword, title, price, state, content from postdata WHERE id = %s"
+    value = id
+    cursor.execute(query, value)
+    tmp = cursor.fetchall()
+    tmp1 = [list(row) for row in tmp]
+    data_list = tmp1[0]
+    print(data_list)
+
+    cursor.close()
+    conn.close()
+    return render_template('mydetail.html',  logininfo=userId, datalist=data_list)
+
+
 @app.route('/mypage', methods=['GET'])
 def mypage():
     if 'userId' in session:
         userId = session['userId']
         conn = connectsql()
         cursor = conn.cursor()
-        query = "select image1, image2, image3, keyword, title, price, state from postdata WHERE user_id = %s order by id DESC"
+        query = "select image1, image2, image3, keyword, id, title, price, state from postdata WHERE user_id = %s order by id DESC"
         cursor.execute(query, userId)
         data_list = cursor.fetchall()
         print(data_list)
 
         cursor.close()
         conn.close()
-        return render_template('mypage_selling.html', loginfo=userId, datalist=data_list)
+        return render_template('mypage_selling.html', logininfo=userId, datalist=data_list)
     else:
         userId = None
-        return render_template('mypageError.html', loginfo=userId)
+        return render_template('mypageError.html', logininfo=userId)
+
 
 @app.route('/mypage_sale', methods=['GET'])
 def mypage_sale():
@@ -192,17 +283,17 @@ def mypage_sale():
         value = (userId, currentState)
         conn = connectsql()
         cursor = conn.cursor()
-        query = "select image1, image2, image3, keyword, title, price, state from postdata WHERE user_id = %s and state = %s order by id DESC"
+        query = "select image1, image2, image3, keyword, id, title, price, state from postdata WHERE user_id = %s and state = %s order by id DESC"
         cursor.execute(query, value)
         data_list = cursor.fetchall()
         print(data_list)
 
         cursor.close()
         conn.close()
-        return render_template('mypage_selling_sale.html', loginfo=userId, datalist=data_list)
+        return render_template('mypage_selling_sale.html', logininfo=userId, datalist=data_list)
     else:
         userId = None
-        return render_template('mypageError.html', loginfo=userId)
+        return render_template('mypageError.html', logininfo=userId)
 
 
 @app.route('/mypage_finish_sale', methods=['GET'])
@@ -213,17 +304,17 @@ def mypage_finish_sale():
         value = (userId, currentState)
         conn = connectsql()
         cursor = conn.cursor()
-        query = "select image1, image2, image3, keyword, title, price, state from postdata WHERE user_id = %s and state = %s order by id DESC"
+        query = "select image1, image2, image3, keyword, id, title, price, state from postdata WHERE user_id = %s and state = %s order by id DESC"
         cursor.execute(query, value)
         data_list = cursor.fetchall()
         print(data_list)
 
         cursor.close()
         conn.close()
-        return render_template('mypage_selling_finishSale.html', loginfo=userId, datalist=data_list)
+        return render_template('mypage_selling_finishSale.html', logininfo=userId, datalist=data_list)
     else:
         userId = None
-        return render_template('mypageError.html', loginfo=userId)
+        return render_template('mypageError.html', logininfo=userId)
 
 
 def image(img):
@@ -264,6 +355,140 @@ def write():
         if 'userId' in session:
             userId = session['userId']
             return render_template('write.html', logininfo=userId)
+
+
+@app.route('/edit/<id>', methods=['GET', 'POST'])
+def edit(id):
+    if request.method == 'POST':
+        if 'userId' in session:
+            userId = session['userId']
+            userPw = session['userPw']
+
+            usertitle = request.form['title']
+            userkeyword = request.form['keyword']
+            userprice = request.form['price']
+            userphoneNum = request.form['phoneNum']
+            usercontent = request.form['content']
+            state = request.form['state']
+            images = request.files.getlist("file[]")
+            image1 = image(images[0])
+            image2 = image(images[1])
+            image3 = image(images[2])
+
+            conn = connectsql()
+            cursor = conn.cursor()
+            query = "UPDATE postdata SET image1 = %s, image2 = %s, image3 = %s, state = %s, title = %s, keyword = %s, price = %s, phoneNum = %s, content = %s WHERE id = %s"
+            value = (image1, image2, image3, state, usertitle, userkeyword, userprice, userphoneNum, usercontent, id)
+            cursor.execute(query, value)
+            conn.commit()
+            cursor.close()
+            conn.close()
+
+            return redirect(url_for('mypage'))
+    else:
+        if 'userId' in session:
+            userId = session['userId']
+            conn = connectsql()
+            cursor = conn.cursor()
+            query = "select id, keyword, title, price, state, phoneNum, content from postdata WHERE id = %s"
+            value = id
+            cursor.execute(query, value)
+            tmp = cursor.fetchall()
+            tmp1 = [list(row) for row in tmp]
+            data_list = tmp1[0]
+            print(data_list)
+
+            cursor.close()
+            conn.close()
+            return render_template('edit.html', logininfo=userId, datalist=data_list)
+
+@app.route('/follow/<idx>')
+def follow(idx):
+    if 'userId' in session:
+        userId = session['userId']
+        userPw = session['userPw']
+        conn = connectsql()
+        cursor = conn.cursor()
+        query_ = "select user_id from postdata where id=%s"
+        cursor.execute(query_, idx)
+        tmp = cursor.fetchall()
+        post_userid_ = [list(row) for row in tmp]
+        post_userid1 = post_userid_[0]
+        post_userid = post_userid1[0]
+
+        print(post_userid)
+
+        value = (userId, userPw, post_userid)
+        query = "insert into _following (user_id, user_pw, following_id) values (%s, %s, %s)"
+        cursor.execute(query, value)
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        return render_template('detail_follow_succeed.html', idx_post=idx, following=post_userid)
+    else:
+        return render_template('followError.html')
+
+@app.route('/unfollow/<idx>')
+def unfollow(idx):
+    if 'userId' in session:
+        userId = session['userId']
+        userPw = session['userPw']
+        conn = connectsql()
+        cursor = conn.cursor()
+        query_ = "select user_id from postdata where id=%s"
+        cursor.execute(query_, idx)
+        tmp = cursor.fetchall()
+        post_userid_ = [list(row) for row in tmp]
+        post_userid1 = post_userid_[0]
+        unfollowing = post_userid1[0]
+
+        q_clear = "set sql_safe_updates=0"
+        cursor.execute(q_clear)
+        value = (userId, userPw, unfollowing)
+        query = "delete from _following where user_id=%s and user_pw=%s and following_id=%s"
+        cursor.execute(query, value)
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        return render_template('detail_unfollow_succeed.html', unfollowing=unfollowing, idx_post=idx)
+    else:
+        return render_template('followError.html')
+
+@app.route('/mypage_following_list')
+def mypage_following_list():
+    if 'userId' in session:
+        conn = connectsql()
+        cursor = conn.cursor()
+        userId = session['userId']
+        query = "select following_id from _following where user_id = %s"
+        cursor.execute(query, userId)
+        tmp = cursor.fetchall()
+        data_list = [list(row) for row in tmp]
+        print(data_list)
+
+        cursor.close()
+        conn.close()
+
+        return render_template('mypage_following_list.html', logininfo=userId, followings=data_list)
+
+@app.route('/mypage_following/<user_id>')
+def mypage_following(user_id):
+    if 'userId'in session:
+        conn = connectsql()
+        cursor = conn.cursor()
+        userId = session['userId']
+        query = "select image1, image2, image3, keyword, title, price, state, id from postdata WHERE user_id = %s order by id DESC"
+        cursor.execute(query, user_id)
+        data_list = cursor.fetchall()
+        print(data_list)
+
+        cursor.close()
+        conn.close()
+        return render_template('mypage_following.html', logininfo=userId, datalist=data_list, id=id)
 
 
 if __name__ == '__main__':

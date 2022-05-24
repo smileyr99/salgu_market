@@ -16,7 +16,6 @@
         }
 
 
-
     </style>
 </head>
 <body>
@@ -24,15 +23,15 @@
 <!-- Navigation-->
 <nav class="navbar navbar-light bg-light" aria-label="Fourth navbar example">
     <div class="container">
-        <!-- -->
+       <!-- -->
         <a class="btn btn-outline-light text-success" href="/mypage">
             <img src="../static/image/person-circle.svg" alt="Logo" style="width:40px;" class="rounded-pill">
         </a>
         <a class="navbar-brand display-5 fw-bolder" href="/home"><h2>Project</h2></a>
         {% if logininfo %}
-        <a class="btn btn-outline-light text-success" href="/login/login">Login</a>
+         <a class="btn btn-outline-light text-success" href="/logout">Logout</a>
         {% else %}
-        <a class="btn btn-outline-light text-success" href="/logout">Logout</a>
+        <a class="btn btn-outline-light text-success" href="/login/login">Login</a>
         {% endif %}
     </div>
 </nav>
@@ -45,8 +44,8 @@
             <div class="position-sticky pt-3">
                 <ul class="nav nav-pills flex-column" role="tablist">
                     <li class="nav-item">
-                        {% if loginfo %}
-                        <a class="nav-link text-dark disabled fw-bolder" href="#">{{loginfo}}님 page</a>
+                        {% if logininfo %}
+                        <a class="nav-link text-dark disabled fw-bolder" href="#">{{logininfo}}님 page</a>
                         {% endif %}
                     <li class="nav-item">
                         <a class="nav-link active text-dark" href="/mypage">판매중인 상품</a>
@@ -70,13 +69,13 @@
                                 <div class="btn-group">
                                     <ul class="nav nav-tabs" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link text-secondary" href="/mypage">전체</a>
+                                            <a class="nav-link text-secondary"  href="/mypage">전체</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link active text-secondary" href="/mypage_sale">판매중</a>
+                                            <a class="nav-link active text-secondary"  href="/mypage_sale">판매중</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link text-secondary" href="/mypage_finish_sale">판매완료</a>
+                                            <a class="nav-link text-secondary"  href="/mypage_finish_sale">판매완료</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -93,7 +92,7 @@
             </div>
 
             <!--게시물 목록-->
-            {% for main in datalist %}
+             {% for main in datalist %}
             <div class="tab-content">
                 <!--게시물 메뉴(전체)-->
                 <div id="total" class="container tab-pane active"><br>
@@ -106,8 +105,7 @@
                                      style="width:180px; height:150px">
                                     <!-- Indicators/dots -->
                                     <div class="carousel-indicators">
-                                        <button type="button" data-bs-target="#demo" data-bs-slide-to="0"
-                                                class="active"></button>
+                                        <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
                                         <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
                                         <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
                                     </div>
@@ -144,21 +142,21 @@
                             <div class="d-flex-column mx-4 align-self-center">
                                 <div class="mt-3">
                                     <strong class="d-inline-block mx-3 text-success">키워드> {{main[3]}}</strong>
-                                    <a class="nav-link" href="./Mydetail.html"><h3 class="text-dark mb-0">
-                                        {{main[4]}}</h3>
+                                    <a class="nav-link" href="/mydetail/{{main[4]}}"><h3 class="text-dark mb-0">{{main[5]}}</h3>
                                     </a>
-                                    <p class="mb-2 mx-3  text-muted">{{main[5]}}</p>
-                                    <div class="mb-2 mx-3  text-muted">{{main[6]}}</div>
+                                    <p class="mb-2 mx-3  text-muted">{{main[6]}}</p>
+                                    <div class="mb-2 mx-3  text-muted">{{main[7]}}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {% endfor %}
+             {% endfor %}
         </main>
     </div>
 </div>
+
 
 
 <!-- Footer-->
