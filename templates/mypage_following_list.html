@@ -65,7 +65,7 @@
         <!--상단 추가 메뉴바 내용-->
         <main class="mb-5 col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center border-bottom mb-3">
-                <h2>Following list of {{logininfo}}</h2>
+                <h2>{{logininfo}}님의 Following list</h2>
             </div>
             {% for row in followings %}
                      <a href="./mypage_following/{{row[0]}}" class="list-group-item list-group-item-action list-group-item-light" style="font-size: 1.5em; font-weight:" >{{row[0]}}</a>

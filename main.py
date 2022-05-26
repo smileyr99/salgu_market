@@ -141,7 +141,7 @@ def detail(idx):
 
     conn = connectsql()
     cursor = conn.cursor()
-    query = "select image1, image2, image3, keyword, title, price, state, user_id,  content, id from postdata WHERE id = %s"
+    query = "select image1, image2, image3, keyword, title, price, state, phoneNum, user_id,  content, id from postdata WHERE id = %s"
     value = idx
     cursor.execute(query, value)
     tmp = cursor.fetchall()
@@ -193,7 +193,7 @@ def following_detail(idx):
 
     conn = connectsql()
     cursor = conn.cursor()
-    query = "select image1, image2, image3, keyword, title, price, state, user_id, content from postdata WHERE id = %s"
+    query = "select image1, image2, image3, keyword, title, price, state, phoneNum, user_id, content from postdata WHERE id = %s"
     value = (idx)
     cursor.execute(query, value)
     tmp = cursor.fetchall()
@@ -243,7 +243,7 @@ def mydetail(id):
         userId = None
     conn = connectsql()
     cursor = conn.cursor()
-    query = "select id, image1, image2, image3, keyword, title, price, state, content from postdata WHERE id = %s"
+    query = "select id, image1, image2, image3, keyword, title, price, state, phoneNum, content from postdata WHERE id = %s"
     value = id
     cursor.execute(query, value)
     tmp = cursor.fetchall()
