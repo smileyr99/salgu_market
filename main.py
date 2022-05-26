@@ -194,7 +194,7 @@ def following_detail(idx):
     conn = connectsql()
     cursor = conn.cursor()
     query = "select image1, image2, image3, keyword, title, price, state, user_id, content from postdata WHERE id = %s"
-    value = idx
+    value = (idx)
     cursor.execute(query, value)
     tmp = cursor.fetchall()
     tmp1 = [list(row) for row in tmp]
@@ -488,7 +488,7 @@ def mypage_following(user_id):
 
         cursor.close()
         conn.close()
-        return render_template('mypage_following.html', logininfo=userId, datalist=data_list, id=id)
+        return render_template('mypage_following.html', logininfo=userId, datalist=data_list, id=user_id)
 
 
 if __name__ == '__main__':
