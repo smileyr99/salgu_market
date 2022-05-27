@@ -151,7 +151,7 @@ def detail(idx):
     else:
         data_list = 0
 
-    post_user_id=data_list[7]
+    post_user_id=data_list[8]
 
     lg = 0  # logged in or not
     flag = 0 #followed or not followed
@@ -169,7 +169,7 @@ def detail(idx):
         flag = 0
         cnt = 0
         if len(followings) == 0:
-            return render_template('detail.html', logininfo=userId, datalist=data_list, posting_id=data_list[7], flag=flag, lg=lg)
+            return render_template('detail.html', logininfo=userId, datalist=data_list, posting_id=data_list[8], flag=flag, lg=lg)
         else:
             for row in followings:
                 if row[0] == post_user_id:
@@ -180,7 +180,7 @@ def detail(idx):
         if cnt == len(followings):
             flag = 0
 
-    return render_template('detail.html', logininfo=userId, datalist=data_list, posting_id=data_list[7], flag=flag, lg=lg)
+    return render_template('detail.html', logininfo=userId, datalist=data_list, posting_id=data_list[8], flag=flag, lg=lg)
 
 
 @app.route('/following_detail/<idx>', methods=['GET'])
@@ -203,7 +203,7 @@ def following_detail(idx):
     else:
         data_list = 0
 
-    post_user_id=data_list[7]
+    post_user_id=data_list[8]
 
     lg = 0  # logged in or not
     flag = 0 #followed or not followed
@@ -221,7 +221,7 @@ def following_detail(idx):
         flag = 0
         cnt = 0
         if len(followings) == 0:
-            return render_template('following_detail.html', logininfo=userId, datalist=data_list, posting_id=data_list[7], flag=flag, lg=lg)
+            return render_template('following_detail.html', logininfo=userId, datalist=data_list, posting_id=data_list[8], flag=flag, lg=lg)
         else:
             for row in followings:
                 if row[0] == post_user_id:
@@ -232,7 +232,7 @@ def following_detail(idx):
         if cnt == len(followings):
             flag = 0
 
-    return render_template('following_detail.html', logininfo=userId, datalist=data_list, posting_id=data_list[7], flag=flag, lg=lg)
+    return render_template('following_detail.html', logininfo=userId, datalist=data_list, posting_id=data_list[8], flag=flag, lg=lg)
 
 
 @app.route('/mydetail/<id>', methods=['GET'])

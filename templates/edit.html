@@ -54,18 +54,18 @@
 <!-- Navigation-->
 <nav class="navbar navbar-light bg-light" aria-label="Fourth navbar example">
     <div class="container">
-        <!-- -->
-        <a class="btn btn-outline-light text-success" href="/mypage">
+        <a class="btn btn-outline-light text-danger" href="/mypage">
             <img src="../static/image/person-circle.svg" alt="Logo" style="width:40px;" class="rounded-pill">
         </a>
-        <a class="navbar-brand display-5 fw-bolder" href="/home"><h2>Project</h2></a>
+        <a class="navbar-brand display-5 fw-bolder" href="/home">  <img src="../static/image/logo.png" alt="Logo" style="width:220px; height:65px"></a>
         {% if logininfo %}
-        <a class="btn btn-outline-light text-success" href="/logout">Logout</a>
+         <a class="btn btn-outline-light text-danger" href="/logout">Logout</a>
         {% else %}
-        <a class="btn btn-outline-light text-success" href="/login/login">Login</a>
+        <a class="btn btn-outline-light text-danger" href="/login/login">Login</a>
         {% endif %}
     </div>
 </nav>
+
 
 <!-- Product section-->
 <div class="container">
@@ -185,12 +185,13 @@
                         <div class="form-group">
                             <label class="col-md-12 control-label" for="singlebutton"></label>
                             <div class="col-md-12 mb-5">
-                                <input id="singlebutton" name="singlebutton" class="btn btn-success" type="submit" value="수정하기">
-                                <button class="btn btn-success" type="button" onclick="location.href='/mydetail/{{datalist[0]}}'">돌아가기
+                                <input id="singlebutton" name="singlebutton" class="btn btn-danger" type="submit" value="수정하기">
+                                <button class="btn btn-danger" type="button" onclick="location.href='/mydetail/{{datalist[0]}}'">돌아가기
                                 </button>
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </fieldset>
         </form>
@@ -201,7 +202,7 @@
 <!-- Footer-->
 <footer class="py-5 bg-light">
     <div class="container">
-        <p class="m-0 text-center text-success">Copyright &copy; Your Website 2022</p>
+        <p class="m-0 text-center text-danger">Copyright &copy; Your Website 2022</p>
     </div>
 </footer>
 
