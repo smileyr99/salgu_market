@@ -1,4 +1,4 @@
-## Software Engineering Project (Salgu Market)
+# Software Engineering Project (Salgu Market)
 Python Flask 기반으로 만든 웹 중고사이트
 ### 구현기능
 * 회원가입
