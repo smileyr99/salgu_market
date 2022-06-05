@@ -369,7 +369,6 @@ def edit(id):
             userprice = request.form['price']
             userphoneNum = request.form['phoneNum']
             usercontent = request.form['content']
-            state = request.form['state']
             images = request.files.getlist("file[]")
             image1 = image(images[0])
             image2 = image(images[1])
@@ -377,8 +376,8 @@ def edit(id):
 
             conn = connectsql()
             cursor = conn.cursor()
-            query = "UPDATE postdata SET image1 = %s, image2 = %s, image3 = %s, state = %s, title = %s, keyword = %s, price = %s, phoneNum = %s, content = %s WHERE id = %s"
-            value = (image1, image2, image3, state, usertitle, userkeyword, userprice, userphoneNum, usercontent, id)
+            query = "UPDATE postdata SET image1 = %s, image2 = %s, image3 = %s, title = %s, keyword = %s, price = %s, phoneNum = %s, content = %s WHERE id = %s"
+            value = (image1, image2, image3, usertitle, userkeyword, userprice, userphoneNum, usercontent, id)
             cursor.execute(query, value)
             conn.commit()
             cursor.close()
@@ -390,7 +389,7 @@ def edit(id):
             userId = session['userId']
             conn = connectsql()
             cursor = conn.cursor()
-            query = "select id, keyword, title, price, state, phoneNum, content from postdata WHERE id = %s"
+            query = "select id, keyword, title, price, phoneNum, content from postdata WHERE id = %s"
             value = id
             cursor.execute(query, value)
             tmp = cursor.fetchall()
@@ -435,6 +434,7 @@ def unfollow(idx):
     if 'userId' in session:
         userId = session['userId']
         userPw = session['userPw']
+
         conn = connectsql()
         cursor = conn.cursor()
         query_ = "select user_id from postdata where id=%s"
@@ -489,6 +489,36 @@ def mypage_following(user_id):
         cursor.close()
         conn.close()
         return render_template('mypage_following.html', logininfo=userId, datalist=data_list, id=user_id)
+
+
+@app.route('/modify_state/<id>', methods=['GET', 'POST'])
+def modify_state(id):
+
+    conn = connectsql()
+    cursor = conn.cursor()
+    query1 = "select id, state from postdata WHERE id = %s"
+    value = id
+    cursor.execute(query1, value)
+    tmp = cursor.fetchall()
+    tmp1 = [list(row) for row in tmp]
+    data_tmp = tmp1[0]
+
+    if data_tmp[1] == '판매중':
+        print(data_tmp[1])
+        state = '판매완료'
+
+    else:
+        print(data_tmp[1])
+        state = '판매중'
+
+    query = "UPDATE postdata SET state = %s WHERE id = %s"
+    value = (state, id)
+    cursor.execute(query, value)
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return redirect(url_for('mydetail', id=id))
 
 
 if __name__ == '__main__':
