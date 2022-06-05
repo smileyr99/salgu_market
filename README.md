@@ -12,5 +12,5 @@ Python Flask 기반으로 만든 중고 웹사이트
 * IDE(Pycharm) 
 * Python
 * Flask
-* MySQL 5.8.27
+* MySQL 8.0.28
 * HTML/JavaScript & Bootstrap
